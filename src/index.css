@@ -11,3 +11,8 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+@font-face {
+  font-family: 'Chango-Regular';
+  src: local('Chango-Regular.ttf') url('https://fonts.googleapis.com/css2?family=Chango&display=swap')
+}
