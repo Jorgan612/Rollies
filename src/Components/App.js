@@ -1,8 +1,10 @@
-
+import React, {useState} from 'react';
 import '../css/App.css';
 import dice from '../assets/d20-blue.png';
 
 const App = () => {
+ const d20 = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20];
+ 
   // state for each player 
   // state for whos turn 
   // 
