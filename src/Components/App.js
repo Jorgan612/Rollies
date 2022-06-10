@@ -23,11 +23,15 @@ const App = () => {
       setIsPlayerOneTurn(true);
     }
     if (playerOneRoll && playerTwoRoll) {
+      // This conditional will not be looked at until the next click  find a way to determine if player 1 and 2 BOTH have rolled AND then display winner before next Dice roll.
       determineWinner();
     }
   };
 
   const determineWinner = () => {
+    // conditional might be broken, test again 
+
+
     if ((playerOneRoll && playerTwoRoll) && playerOneRoll > playerTwoRoll) {
       setWinningPlayer('Roller One Wins!');
       setPlayerOneRoll(0);
