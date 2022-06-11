@@ -21,11 +21,14 @@ const App = () => {
     if (!isPlayerOneTurn) {
       setPlayerTwoRoll(newRoll);
       setIsPlayerOneTurn(true);
-    }
-    if (playerOneRoll && playerTwoRoll) {
-      // This conditional will not be looked at until the next click  find a way to determine if player 1 and 2 BOTH have rolled AND then display winner before next Dice roll.
       determineWinner();
     }
+    // if (playerOneRoll && playerTwoRoll) {
+      // This conditional will not be looked at until the next click  find a way to determine if player 1 and 2 BOTH have rolled AND then display winner before next Dice roll.
+      // setTimeout maybe?
+    //   console.log('determine winner condition met?')
+    //   determineWinner();
+    // }
   };
 
   const determineWinner = () => {
@@ -34,15 +37,16 @@ const App = () => {
 
     if ((playerOneRoll && playerTwoRoll) && playerOneRoll > playerTwoRoll) {
       setWinningPlayer('Roller One Wins!');
-      setPlayerOneRoll(0);
-      // setPlayerTwoRoll(0);
       console.log('player one wins!')
     } else {
       setWinningPlayer('Roller Two Wins!');
-      // setPlayerOneRoll(0);
-      setPlayerTwoRoll(0);
       console.log('player two wins!!!')
     }
+    setTimeout(() => {
+      console.log("Delayed for 1 second.");
+      setPlayerOneRoll(null);
+      setPlayerTwoRoll(null);
+    }, "2000")
 
   }
 
