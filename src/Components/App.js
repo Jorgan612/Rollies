@@ -23,29 +23,25 @@ const App = () => {
       setIsPlayerOneTurn(true);
       determineWinner();
     }
-    // if (playerOneRoll && playerTwoRoll) {
-      // This conditional will not be looked at until the next click  find a way to determine if player 1 and 2 BOTH have rolled AND then display winner before next Dice roll.
-      // setTimeout maybe?
-    //   console.log('determine winner condition met?')
-    //   determineWinner();
-    // }
   };
 
   const determineWinner = () => {
-    // conditional might be broken, test again 
-
-
-    if ((playerOneRoll && playerTwoRoll) && playerOneRoll > playerTwoRoll) {
+    // better BUT now the winningPlayer is off / inaccurate
+    // will only sometimes say player two wins!
+    // draw condition written BUT will also show draw if you click too quickly and one of the values is still Null. 
+    // setTimeout is not preventing additional clicks
+    // and if clicked during set timeout the new roll for the next player is cleared at the end of the setTimeout.
+    if (playerOneRoll > playerTwoRoll) {
       setWinningPlayer('Roller One Wins!');
-      console.log('player one wins!')
-    } else {
+    } else if (playerOneRoll < playerTwoRoll) {
       setWinningPlayer('Roller Two Wins!');
-      console.log('player two wins!!!')
+    } else if (playerOneRoll === playerTwoRoll) {
+      setWinningPlayer('DRAW!');
     }
     setTimeout(() => {
-      console.log("Delayed for 1 second.");
       setPlayerOneRoll(null);
       setPlayerTwoRoll(null);
+      setWinningPlayer('');
     }, "2000")
 
   }
@@ -55,18 +51,18 @@ return (
     <h1 className='rollies-title title'>Rollies!!</h1>
     <div className='all-sections-div'>
       <section className='player-one-section'>
-        <h1 className='player-one-title title'>Roller One</h1>
-        <p>{}</p>
+        <h1 className='player-one-title title'>Player One</h1>
+        {!playerWins.playerTwoWins && <p>Total Wins: {}</p>}
       </section>
       <section className='center-section'>
         <img className='blue-dice-png-button' src={dice} alt='red 20 sided polyhedral dice' onClick={getDiceRoll}/>
-        {isPlayerOneTurn ? <h2 className='title'>Roll The Dice Roller One!!</h2> : <h2 className='title'>Roll The Dice Roller Two!!</h2>}
-        {playerOneRoll && <p className='current-roll'>Roller One: {playerOneRoll}</p>}
-        {playerTwoRoll && <p className='current-roll'>Roller Two: {playerTwoRoll}</p>}
-        {winningPlayer && <h3>{winningPlayer}</h3>}
+        {isPlayerOneTurn ? <h2 className='title'>Roll The Dice Player One!!</h2> : <h2 className='title'>Roll The Dice Player Two!!</h2>}
+        {playerOneRoll && <p className='current-roll'>Player One: {playerOneRoll}</p>}
+        {playerTwoRoll && <p className='current-roll'>Player Two: {playerTwoRoll}</p>}
+        {winningPlayer ? <h3>{winningPlayer}</h3> : <p></p>}
       </section>
       <section className='player-two-section'>
-        <h1 className='player-two-title title'>Roller Two</h1>
+        <h1 className='player-two-title title'>Player Two</h1>
         {!playerWins.playerTwoWins && <p>Total Wins: {}</p>}
       </section>
     </div>
