@@ -9,7 +9,7 @@ const App = () => {
  const [playerTwoRoll, setPlayerTwoRoll] = useState(null);
  const [isPlayerOneTurn, setIsPlayerOneTurn] = useState(true);
  const [winningPlayer, setWinningPlayer] = useState('');
- const [playerWins, setPlayerWins] = useState({playerOneWins: [], playerTwoWins: []});
+ const [playerWins, setPlayerWins] = useState({playerOneWins: 0, playerTwoWins: 0});
   
 
   const getDiceRoll = () => {
@@ -33,8 +33,10 @@ const App = () => {
     // and if clicked during set timeout the new roll for the next player is cleared at the end of the setTimeout.
     if (playerOneRoll > playerTwoRoll) {
       setWinningPlayer('Roller One Wins!');
+      addPlayerWin();
     } else if (playerOneRoll < playerTwoRoll) {
       setWinningPlayer('Roller Two Wins!');
+      addPlayerWin();
     } else if (playerOneRoll === playerTwoRoll) {
       setWinningPlayer('DRAW!');
     }
@@ -42,8 +44,20 @@ const App = () => {
       setPlayerOneRoll(null);
       setPlayerTwoRoll(null);
       setWinningPlayer('');
-    }, "2000")
+    }, "2000");
+  }
 
+  const addPlayerWin = () => {
+    //not working yet
+    if (winningPlayer === 'Roller One Wins!') {
+      playerWins.playerOneWins++;
+    } 
+    if (winningPlayer === 'Roller Two Wins!') {
+      playerWins.playerTwoWins++;
+    }
+    if (winningPlayer !== 'Roller One Wins!' || winningPlayer !== 'Roller Two Wins!') {
+      return;
+    }
   }
 
 return (
@@ -52,7 +66,7 @@ return (
     <div className='all-sections-div'>
       <section className='player-one-section'>
         <h1 className='player-one-title title'>Player One</h1>
-        {!playerWins.playerTwoWins && <p>Total Wins: {}</p>}
+        {!playerWins.playerOneWins && <p>Total Wins: {}</p>}
       </section>
       <section className='center-section'>
         <img className='blue-dice-png-button' src={dice} alt='red 20 sided polyhedral dice' onClick={getDiceRoll}/>
