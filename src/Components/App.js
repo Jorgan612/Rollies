@@ -3,8 +3,6 @@ import '../css/App.css';
 import dice from '../assets/d20-blue.png';
 
 const App = () => {
- const d20 = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20];
-
  const [playerOneRoll, setPlayerOneRoll] = useState(null);
  const [playerTwoRoll, setPlayerTwoRoll] = useState(null);
  const [isPlayerOneTurn, setIsPlayerOneTurn] = useState(true);
@@ -13,7 +11,8 @@ const App = () => {
   
 
   const getDiceRoll = () => {
-    let newRoll = Math.floor(Math.random() * d20.length);
+    // can get a random 0 --- NEED TO FIX THIS. 
+    let newRoll = Math.floor(Math.random() * 20);
     if (isPlayerOneTurn) {
       setPlayerOneRoll(newRoll);
       setIsPlayerOneTurn(false);
