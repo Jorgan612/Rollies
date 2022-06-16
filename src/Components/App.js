@@ -12,7 +12,7 @@ const App = () => {
 
   const getDiceRoll = () => {
     // can get a random 0 --- NEED TO FIX THIS. 
-    let newRoll = Math.floor(Math.random() * 20);
+    let newRoll = Math.floor(Math.random() * 20 + 1);
     if (isPlayerOneTurn) {
       setPlayerOneRoll(newRoll);
       setIsPlayerOneTurn(false);
@@ -47,12 +47,16 @@ const App = () => {
   }
 
   const addPlayerWin = () => {
-    //not working yet
+    //function is invoked, but conditions are not met.
+    // object in state might be tricky using hooks per google (investigate further)
+    console.log('add player win function')
     if (winningPlayer === 'Roller One Wins!') {
-      playerWins.playerOneWins++;
+      // playerWins.playerOneWins++;
+      setPlayerWins(playerWins.playerOneWins + 1);
+      console.log('addPlayerWin condition work?')
     } 
     if (winningPlayer === 'Roller Two Wins!') {
-      playerWins.playerTwoWins++;
+      setPlayerWins(playerWins.playerTwoWins + 1);
     }
     if (winningPlayer !== 'Roller One Wins!' || winningPlayer !== 'Roller Two Wins!') {
       return;
@@ -65,10 +69,10 @@ return (
     <div className='all-sections-div'>
       <section className='player-one-section'>
         <h1 className='player-one-title title'>Player One</h1>
-        {!playerWins.playerOneWins && <p>Total Wins: {}</p>}
+        {!playerWins.playerOneWins && <p>Total Wins: {playerWins.playerOneWins}</p>}
       </section>
       <section className='center-section'>
-        <img className='blue-dice-png-button' src={dice} alt='red 20 sided polyhedral dice' onClick={getDiceRoll}/>
+        <img className='blue-dice-png-button' src={dice} alt='Blue 20 sided polyhedral dice' onClick={getDiceRoll}/>
         {isPlayerOneTurn ? <h2 className='title'>Roll The Dice Player One!!</h2> : <h2 className='title'>Roll The Dice Player Two!!</h2>}
         {playerOneRoll && <p className='current-roll'>Player One: {playerOneRoll}</p>}
         {playerTwoRoll && <p className='current-roll'>Player Two: {playerTwoRoll}</p>}
@@ -76,7 +80,7 @@ return (
       </section>
       <section className='player-two-section'>
         <h1 className='player-two-title title'>Player Two</h1>
-        {!playerWins.playerTwoWins && <p>Total Wins: {}</p>}
+        {!playerWins.playerTwoWins && <p>Total Wins: {playerWins.playerTwoWins}</p>}
       </section>
     </div>
   </section>
