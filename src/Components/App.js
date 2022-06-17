@@ -7,12 +7,13 @@ const App = () => {
  const [playerTwoRoll, setPlayerTwoRoll] = useState(null);
  const [isPlayerOneTurn, setIsPlayerOneTurn] = useState(true);
  const [winningPlayer, setWinningPlayer] = useState('');
- const [playerWins, setPlayerWins] = useState({playerOneWins: 0, playerTwoWins: 0});
+ const [playerOneWins, setPlayerOneWins] = useState(0);
+ const [playerTwoWins, setPlayerTwoWins] = useState(0);
   
 
   const getDiceRoll = () => {
-    // can get a random 0 --- NEED TO FIX THIS. 
     let newRoll = Math.floor(Math.random() * 20 + 1);
+    console.log('newroll', newRoll)
     if (isPlayerOneTurn) {
       setPlayerOneRoll(newRoll);
       setIsPlayerOneTurn(false);
@@ -30,37 +31,54 @@ const App = () => {
     // draw condition written BUT will also show draw if you click too quickly and one of the values is still Null. 
     // setTimeout is not preventing additional clicks
     // and if clicked during set timeout the new roll for the next player is cleared at the end of the setTimeout.
+
+
+    // Draw does note work 
+    // conditions aren't working for player 2 and draw
+
+
     if (playerOneRoll > playerTwoRoll) {
       setWinningPlayer('Roller One Wins!');
       addPlayerWin();
-    } else if (playerOneRoll < playerTwoRoll) {
+      console.log('player 1 won')
+    } 
+    if (playerOneRoll < playerTwoRoll) {
       setWinningPlayer('Roller Two Wins!');
       addPlayerWin();
-    } else if (playerOneRoll === playerTwoRoll) {
+      console.log('player 2 wins')
+    } 
+    if (playerOneRoll === playerTwoRoll) {
       setWinningPlayer('DRAW!');
+      console.log('DRAW!')
     }
-    setTimeout(() => {
-      setPlayerOneRoll(null);
-      setPlayerTwoRoll(null);
-      setWinningPlayer('');
-    }, "2000");
+    // setTimeout(() => {
+    //   setPlayerOneRoll(null);
+    //   setPlayerTwoRoll(null);
+    //   setWinningPlayer('');
+    // }, "2000");
   }
 
   const addPlayerWin = () => {
     //function is invoked, but conditions are not met.
     // object in state might be tricky using hooks per google (investigate further)
-    console.log('add player win function')
+    // console.log('add player win function')
     if (winningPlayer === 'Roller One Wins!') {
       // playerWins.playerOneWins++;
-      setPlayerWins(playerWins.playerOneWins + 1);
+      setPlayerOneWins(playerOneWins + 1);
       console.log('addPlayerWin condition work?')
     } 
     if (winningPlayer === 'Roller Two Wins!') {
-      setPlayerWins(playerWins.playerTwoWins + 1);
+      setPlayerTwoWins(playerTwoWins + 1);
     }
-    if (winningPlayer !== 'Roller One Wins!' || winningPlayer !== 'Roller Two Wins!') {
-      return;
-    }
+    // if (winningPlayer !== 'Roller One Wins!' || winningPlayer !== 'Roller Two Wins!') {
+    //   return;
+    // }
+
+    // setTimeout(() => {
+    //   setPlayerOneRoll(null);
+    //   setPlayerTwoRoll(null);
+    //   setWinningPlayer('');
+    // }, "2000");
   }
 
 return (
@@ -69,7 +87,7 @@ return (
     <div className='all-sections-div'>
       <section className='player-one-section'>
         <h1 className='player-one-title title'>Player One</h1>
-        {!playerWins.playerOneWins && <p>Total Wins: {playerWins.playerOneWins}</p>}
+        {!playerOneWins && <p>Total Wins: {playerOneWins}</p>}
       </section>
       <section className='center-section'>
         <img className='blue-dice-png-button' src={dice} alt='Blue 20 sided polyhedral dice' onClick={getDiceRoll}/>
@@ -80,7 +98,7 @@ return (
       </section>
       <section className='player-two-section'>
         <h1 className='player-two-title title'>Player Two</h1>
-        {!playerWins.playerTwoWins && <p>Total Wins: {playerWins.playerTwoWins}</p>}
+        {!playerTwoWins && <p>Total Wins: {playerTwoWins}</p>}
       </section>
     </div>
   </section>
