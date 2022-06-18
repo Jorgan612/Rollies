@@ -16,6 +16,7 @@ const App = () => {
     if (isPlayerOneTurn) {
       setPlayerOneRoll(newRoll);
       setIsPlayerOneTurn(false);
+      determineWinner();
     } 
     if (!isPlayerOneTurn) {
       setPlayerTwoRoll(newRoll);
@@ -29,33 +30,30 @@ const App = () => {
     // draw condition written BUT will also show draw if you click too quickly and one of the values is still Null. 
     // setTimeout is not preventing additional clicks
     // and if clicked during set timeout the new roll for the next player is cleared at the end of the setTimeout.
-
-    if (playerOneRoll > playerTwoRoll) {
-      setWinningPlayer('Roller One Wins!');
+    if (playerOneRoll === null || playerTwoRoll === null) {
+      console.log('play 1 or 2 null condition?')
+      return;
+    } else if (playerOneRoll > playerTwoRoll) {
+      setWinningPlayer('Player One Wins!');
       addPlayerWin();
-    }; 
-    if (playerOneRoll < playerTwoRoll) {
-      setWinningPlayer('Roller Two Wins!');
+    } else if (playerOneRoll < playerTwoRoll) {
+      setWinningPlayer('Player Two Wins!');
       addPlayerWin();
-    }; 
-    if (playerOneRoll === playerTwoRoll) {
+    } else if (playerOneRoll === playerTwoRoll) {
       setWinningPlayer('DRAW!');
     };
   }
 
   const addPlayerWin = () => {
     //function is invoked, but conditions are not met.
-    if (winningPlayer === 'Roller One Wins!') {
+    if (winningPlayer === 'Player One Wins!') {
       setPlayerOneWins(playerOneWins + 1);
       console.log('setplayerONEwins', playerOneWins)
     } 
-    if (winningPlayer === 'Roller Two Wins!') {
+    if (winningPlayer === 'Player Two Wins!') {
       setPlayerTwoWins(playerTwoWins + 1);
       console.log('setplayerTWOwins', playerTwoWins)
     }
-    // if (winningPlayer === 'DRAW!') {
-    //   return;
-    // }
 
     // setTimeout(() => {
     //   setPlayerOneRoll(null);
