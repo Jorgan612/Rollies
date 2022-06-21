@@ -45,7 +45,6 @@ const App = () => {
   }
 
   const addPlayerWin = () => {
-    //function is invoked, but conditions are not met.
     if (winningPlayer === 'Player One Wins!') {
       setPlayerOneWins(playerOneWins + 1);
       console.log('setplayerONEwins', playerOneWins)
@@ -55,11 +54,11 @@ const App = () => {
       console.log('setplayerTWOwins', playerTwoWins)
     }
 
-    // setTimeout(() => {
-    //   setPlayerOneRoll(null);
-    //   setPlayerTwoRoll(null);
-    //   setWinningPlayer('');
-    // }, "2000");
+    setTimeout(() => {
+      setPlayerOneRoll(null);
+      setPlayerTwoRoll(null);
+      setWinningPlayer('');
+    }, "2000");
   }
 
 return (
