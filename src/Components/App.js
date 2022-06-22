@@ -72,8 +72,8 @@ return (
         {isPlayerOneTurn ? <h2 className='title'>Roll The Dice Player One!!</h2> : <h2 className='title'>Roll The Dice Player Two!!</h2>}
         {playerOneRoll && <p className='current-roll'>Player One: {playerOneRoll}</p>}
         {playerTwoRoll && <p className='current-roll'>Player Two: {playerTwoRoll}</p>}
-        {winningPlayer ? <h3>{winningPlayer}</h3>
-        <button onClick={resetNextTurn}>Roll Again?</button> : <p></p>}
+        {winningPlayer ? <h3>{winningPlayer}</h3> : <p></p>}
+        <div className='reset-button' onClick={resetNextTurn}>Roll Again?</div>
       </section>
       <section className='player-two-section'>
         <h1 className='player-two-title title'>Player Two</h1>
