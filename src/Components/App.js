@@ -26,12 +26,10 @@ const App = () => {
   };
 
   const determineWinner = () => {
-    // better BUT now the winningPlayer is off / inaccurate
-    // draw condition written BUT will also show draw if you click too quickly and one of the values is still Null. 
+    // better BUT now the winningPlayer is off / inaccurate - requires third click to display winning player which throws EVERYTHING OFF 
     // setTimeout is not preventing additional clicks
     // and if clicked during set timeout the new roll for the next player is cleared at the end of the setTimeout.
     if (playerOneRoll === null || playerTwoRoll === null) {
-      console.log('play 1 or 2 null condition?')
       return;
     } else if (playerOneRoll > playerTwoRoll) {
       setWinningPlayer('Player One Wins!');
@@ -47,18 +45,18 @@ const App = () => {
   const addPlayerWin = () => {
     if (winningPlayer === 'Player One Wins!') {
       setPlayerOneWins(playerOneWins + 1);
-      console.log('setplayerONEwins', playerOneWins)
     } 
     if (winningPlayer === 'Player Two Wins!') {
       setPlayerTwoWins(playerTwoWins + 1);
-      console.log('setplayerTWOwins', playerTwoWins)
     }
+  }
 
-    setTimeout(() => {
+  const resetNextTurn = () => {
+    // setTimeout(() => {
       setPlayerOneRoll(null);
       setPlayerTwoRoll(null);
       setWinningPlayer('');
-    }, "2000");
+    // }, "2000");
   }
 
 return (
@@ -74,7 +72,8 @@ return (
         {isPlayerOneTurn ? <h2 className='title'>Roll The Dice Player One!!</h2> : <h2 className='title'>Roll The Dice Player Two!!</h2>}
         {playerOneRoll && <p className='current-roll'>Player One: {playerOneRoll}</p>}
         {playerTwoRoll && <p className='current-roll'>Player Two: {playerTwoRoll}</p>}
-        {winningPlayer ? <h3>{winningPlayer}</h3> : <p></p>}
+        {winningPlayer ? <h3>{winningPlayer}</h3>
+        <button onClick={resetNextTurn}>Roll Again?</button> : <p></p>}
       </section>
       <section className='player-two-section'>
         <h1 className='player-two-title title'>Player Two</h1>
