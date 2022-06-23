@@ -16,7 +16,6 @@ const App = () => {
     if (isPlayerOneTurn) {
       setPlayerOneRoll(newRoll);
       setIsPlayerOneTurn(false);
-      determineWinner();
     } 
     if (!isPlayerOneTurn) {
       setPlayerTwoRoll(newRoll);
@@ -26,12 +25,7 @@ const App = () => {
   };
 
   const determineWinner = () => {
-    // better BUT now the winningPlayer is off / inaccurate - requires third click to display winning player which throws EVERYTHING OFF 
-    // setTimeout is not preventing additional clicks
-    // and if clicked during set timeout the new roll for the next player is cleared at the end of the setTimeout.
-    if (playerOneRoll === null || playerTwoRoll === null) {
-      return;
-    } else if (playerOneRoll > playerTwoRoll) {
+    if (playerOneRoll > playerTwoRoll) {
       setWinningPlayer('Player One Wins!');
       addPlayerWin();
     } else if (playerOneRoll < playerTwoRoll) {
@@ -52,11 +46,9 @@ const App = () => {
   }
 
   const resetNextTurn = () => {
-    // setTimeout(() => {
       setPlayerOneRoll(null);
       setPlayerTwoRoll(null);
       setWinningPlayer('');
-    // }, "2000");
   }
 
 return (
@@ -73,7 +65,7 @@ return (
         {playerOneRoll && <p className='current-roll'>Player One: {playerOneRoll}</p>}
         {playerTwoRoll && <p className='current-roll'>Player Two: {playerTwoRoll}</p>}
         {winningPlayer ? <h3>{winningPlayer}</h3> : <p></p>}
-        <div className='reset-button' onClick={resetNextTurn}>Roll Again?</div>
+        {winningPlayer && <div className='reset-button' onClick={resetNextTurn}>Roll Again?</div>}
       </section>
       <section className='player-two-section'>
         <h1 className='player-two-title title'>Player Two</h1>

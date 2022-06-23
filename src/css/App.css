@@ -37,6 +37,7 @@
 
 .blue-dice-png-button {
   height: 30%;
+  cursor: pointer;
 }
 
 .blue-dice-png-button:hover {
