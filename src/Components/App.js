@@ -9,7 +9,6 @@ const App = () => {
  const [winningPlayer, setWinningPlayer] = useState('');
  const [playerOneWins, setPlayerOneWins] = useState(null);
  const [playerTwoWins, setPlayerTwoWins] = useState(null);
-  
 
   const getDiceRoll = () => {
     let newRoll = Math.floor(Math.random() * 20 + 1);
