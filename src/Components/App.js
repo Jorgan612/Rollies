@@ -7,8 +7,8 @@ const App = () => {
  const [playerTwoRoll, setPlayerTwoRoll] = useState(null);
  const [isPlayerOneTurn, setIsPlayerOneTurn] = useState(true);
  const [winningPlayer, setWinningPlayer] = useState('');
- const [playerOneWins, setPlayerOneWins] = useState(null);
- const [playerTwoWins, setPlayerTwoWins] = useState(null);
+ const [playerOneWins, setPlayerOneWins] = useState(0);
+ const [playerTwoWins, setPlayerTwoWins] = useState(0);
 
   const getDiceRoll = () => {
     let newRoll = Math.floor(Math.random() * 20 + 1);
@@ -24,6 +24,7 @@ const App = () => {
   };
 
   const determineWinner = () => {
+    // determine Winner IS being called after player 2's roll is set
     if (playerOneRoll > playerTwoRoll) {
       setWinningPlayer('Player One Wins!');
       addPlayerWin();
@@ -36,8 +37,10 @@ const App = () => {
   }
 
   const addPlayerWin = () => {
+    let playerOne = 0;
     if (winningPlayer === 'Player One Wins!') {
-      setPlayerOneWins(playerOneWins + 1);
+      playerOne++;
+      setPlayerOneWins({playerOne});
     } 
     if (winningPlayer === 'Player Two Wins!') {
       setPlayerTwoWins(playerTwoWins + 1);
@@ -56,7 +59,8 @@ return (
     <div className='all-sections-div'>
       <section className='player-one-section'>
         <h1 className='player-one-title title'>Player One</h1>
-        {playerOneWins && <p>Total Wins: {playerOneWins}</p>}
+        <p>Total Wins: {playerOneWins}</p>
+        {/* {playerOneWins && <p>Total Wins: {playerOneWins}</p>} */}
       </section>
       <section className='center-section'>
         <img className='blue-dice-png-button' src={dice} alt='Blue 20 sided polyhedral dice' onClick={getDiceRoll}/>
@@ -68,7 +72,8 @@ return (
       </section>
       <section className='player-two-section'>
         <h1 className='player-two-title title'>Player Two</h1>
-        {playerTwoWins && <p>Total Wins: {playerTwoWins}</p>}
+        <p>Total Wins: {playerTwoWins}</p>
+        {/* {playerTwoWins && <p>Total Wins: {playerTwoWins}</p>} */}
       </section>
     </div>
   </section>
