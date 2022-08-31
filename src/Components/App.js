@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import '../css/App.css';
 import dice from '../assets/d20-blue.png';
 
@@ -15,58 +15,85 @@ const App = () => {
 
   const getDiceRoll = () => {
     let newRoll = Math.floor(Math.random() * 20 + 1);
-    console.log('newRoll', newRoll);
     if (isPlayerOneTurn) {
       setPlayerOneRoll(newRoll);
       setIsPlayerOneTurn(false);
     } else {
-      // setPlayerTwoRoll is not setting newRoll as its value - it remains null. Why? 
-      // per stackoverflow setState is asynchronous and doesn't reflect the updated state value immediately. 
-
-      // passing a second argument into the setPlayerTwoRoll function does not work and console recommends using UseEffect instead. 
       setPlayerTwoRoll(newRoll);
       setIsPlayerOneTurn(true);
     }
   }
 
   /*
-   useEffect is allowing setPlayerTwoRoll to update state AND allow for the all logic in determineWinner to work BUT it is creating an infinite loop... A: When the die is clicked a third time without reseting the state for player rolls first and B: randomly - regardless of whether Roll Again? is clicked before the next round or not... BUT sometimes it works as intended.
+   useEffect is allowing setPlayerTwoRoll to update state AND allow for the all logic in determineWinner to work BUT it is creating an infinite loop when the die is clicked a third time without reseting the state AND / OR playerOneRoll and playerTwoRoll have a truthy value the loop happens. 
+   The loops DOES NOT happen on an outcome of "DRAW!" because addPlayerWin function is not being called on draw. 
+
+   The loop stops once 'Roll Again?' button has been clicked and state for player rolls have been reset. 
    */
+
+   /* 
+   8/31/2022 Note:
+   Added useCallback() effect to see if that will prevent repeated re-renders if the state remains the same. 
+   Having difficulty with array dependency on determineWinner function. when addPlayerWin is added to the useCallback array dependency it goes back to creating the infinite loop. 
+   */
+
   useEffect(() => {
     playerOneRoll && playerTwoRoll && determineWinner();
   })
 
+  // old function 
 
-  const determineWinner = () => {
-    // determine Winner IS being called after player 2's roll is set
-    // above comment made before implementing useEffect hook
-    console.log('player 1 roll --', playerOneRoll)
-    console.log('player 2 roll --', playerTwoRoll)
+  // const determineWinner = () => {
+  //   console.log('player 1 roll --', playerOneRoll);
+  //   console.log('player 2 roll --', playerTwoRoll);
 
-    // playerTwoRoll is logging null, setPlayerTwoRoll from getDiceRoll function is not setting state.
-    if (playerOneRoll > playerTwoRoll) {
-      console.log('determineWin - if')
-      setWinningPlayer('Player One Wins!');
-      addPlayerWin();
-    } else if (playerOneRoll < playerTwoRoll) {
-      console.log('determineWin - else if')
-      setWinningPlayer('Player Two Wins!');
-      addPlayerWin();
-    } else if (playerOneRoll === playerTwoRoll) {
-      console.log('determineWin - else')
-      setWinningPlayer('DRAW!');
-    }
-  }
+  //   if (playerOneRoll > playerTwoRoll) {
+  //     setWinningPlayer('Player One Wins!');
+  //     addPlayerWin();
+  //   } else if (playerOneRoll < playerTwoRoll) {
+  //     setWinningPlayer('Player Two Wins!');
+  //     addPlayerWin();
+  //   } else if (playerOneRoll === playerTwoRoll) {
+  //     setWinningPlayer('DRAW!');
+  //   }
+  // }
 
-  const addPlayerWin = () => {
-    // Conditions and setState are working - will there be async issues in the future?
+  
+  // including a return statement in each if block or at the end of the function block for addPlayerWin is NOT preventing the loop.
+
+  const addPlayerWin = useCallback(() => {
     if (winningPlayer === 'Player One Wins!') {
       setPlayerOneWins(playerOneWins + 1);
     } 
     if (winningPlayer === 'Player Two Wins!') {
       setPlayerTwoWins(playerTwoWins + 1);
     }
-  }
+  }, [setPlayerOneWins, setPlayerTwoWins, winningPlayer, playerOneWins, playerTwoWins])
+
+  // OLD FUNCTION BELOW
+  // const addPlayerWin = () => {
+  //   if (winningPlayer === 'Player One Wins!') {
+  //     setPlayerOneWins(playerOneWins + 1);
+  //   } 
+  //   if (winningPlayer === 'Player Two Wins!') {
+  //     setPlayerTwoWins(playerTwoWins + 1);
+  //   }
+  // }
+
+  const determineWinner = useCallback(() => {
+    console.log('player 1 roll --', playerOneRoll);
+    console.log('player 2 roll --', playerTwoRoll);
+
+    if (playerOneRoll > playerTwoRoll) {
+      setWinningPlayer('Player One Wins!');
+      addPlayerWin();
+    } else if (playerOneRoll < playerTwoRoll) {
+      setWinningPlayer('Player Two Wins!');
+      addPlayerWin();
+    } else if (playerOneRoll === playerTwoRoll) {
+      setWinningPlayer('DRAW!');
+    }
+  }, [playerTwoRoll]) 
 
   const resetNextTurn = () => {
       setPlayerOneRoll(null);
@@ -84,7 +111,7 @@ return (
       </section>
       <section className='center-section'>
         <img className='blue-dice-png-button' src={dice} alt='Blue 20 sided polyhedral dice' onClick={getDiceRoll}/>
-        {isPlayerOneTurn ? <h2 className='title'>Roll The Die Player One!!</h2> : <h2 className='title'>Roll The Die Player Two!!</h2>}
+        {isPlayerOneTurn ? <h2 className='title'>Roll the die Player One!!</h2> : <h2 className='title'>Roll The Die Player Two!!</h2>}
         {playerOneRoll && <p className='current-roll'>Player One: {playerOneRoll}</p>}
         {playerTwoRoll && <p className='current-roll'>Player Two: {playerTwoRoll}</p>}
         {winningPlayer && <h3>{winningPlayer}</h3>}
