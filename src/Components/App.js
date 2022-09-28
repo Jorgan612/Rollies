@@ -32,24 +32,23 @@ const App = () => {
 
 
   const determineWinner = () => {
-    console.log('player 2 roll --', playerTwoRoll);
 
     if (playerOneRoll > playerTwoRoll) {
       setWinningPlayer('Player One Wins!');
-      addPlayerWin();
+      addPlayerWin(1);
     } else if (playerOneRoll < playerTwoRoll) {
       setWinningPlayer('Player Two Wins!');
-      addPlayerWin();
+      addPlayerWin(2);
     } else if (playerOneRoll === playerTwoRoll) {
       setWinningPlayer('DRAW!');
     }
   }
 
-  const addPlayerWin = () => {
-    if (winningPlayer === 'Player One Wins!') {
+  const addPlayerWin = (winningPlayer) => {
+    if (winningPlayer === 1) {
       setPlayerOneWins(playerOneWins + 1);
     } 
-    if (winningPlayer === 'Player Two Wins!') {
+    if (winningPlayer === 2) {
       setPlayerTwoWins(playerTwoWins + 1);
     }
   }
