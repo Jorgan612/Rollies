@@ -10,8 +10,8 @@ const App = () => {
 
  const [winningPlayer, setWinningPlayer] = useState('');
 
- const [playerOneWins, setPlayerOneWins] = useState(0);
- const [playerTwoWins, setPlayerTwoWins] = useState(0);
+ const [playerOneWins, setPlayerOneWins] = useState(null);
+ const [playerTwoWins, setPlayerTwoWins] = useState(null);
 
   const getDiceRoll = () => {
     let newRoll = Math.floor(Math.random() * 20 + 1);
@@ -69,7 +69,7 @@ return (
       </section>
       <section className='center-section'>
         <img className='blue-dice-png-button' src={dice} alt='Blue 20 sided polyhedral dice' onClick={getDiceRoll}/>
-        {isPlayerOneTurn ? <h2 className='title'>Roll the die Player One!!</h2> : <h2 className='title'>Roll The Die Player Two!!</h2>}
+        {isPlayerOneTurn ? <h2 className='title'>Roll the die Player One!!</h2> : <h2 className='title'>Roll the die Player Two!!</h2>}
         {playerOneRoll && <p className='current-roll'>Player One: {playerOneRoll}</p>}
         {playerTwoRoll && <p className='current-roll'>Player Two: {playerTwoRoll}</p>}
         {winningPlayer && <h3>{winningPlayer}</h3>}
