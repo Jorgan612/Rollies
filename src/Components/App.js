@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useEffect } from 'react';
 import '../css/App.css';
 import dice from '../assets/d20-blue.png';
 
@@ -24,64 +24,14 @@ const App = () => {
     }
   }
 
-  /*
-   useEffect is allowing setPlayerTwoRoll to update state AND allow for the all logic in determineWinner to work BUT it is creating an infinite loop when the die is clicked a third time without reseting the state AND / OR playerOneRoll and playerTwoRoll have a truthy value the loop happens. 
-   The loops DOES NOT happen on an outcome of "DRAW!" because addPlayerWin function is not being called on draw. 
-
-   The loop stops once 'Roll Again?' button has been clicked and state for player rolls have been reset. 
-   */
-
-   /* 
-   8/31/2022 Note:
-   Added useCallback() effect to see if that will prevent repeated re-renders if the state remains the same. 
-   Having difficulty with array dependency on determineWinner function. when addPlayerWin is added to the useCallback array dependency it goes back to creating the infinite loop. 
-   */
-
   useEffect(() => {
-    playerOneRoll && playerTwoRoll && determineWinner();
-  })
-
-  // old function 
-
-  // const determineWinner = () => {
-  //   console.log('player 1 roll --', playerOneRoll);
-  //   console.log('player 2 roll --', playerTwoRoll);
-
-  //   if (playerOneRoll > playerTwoRoll) {
-  //     setWinningPlayer('Player One Wins!');
-  //     addPlayerWin();
-  //   } else if (playerOneRoll < playerTwoRoll) {
-  //     setWinningPlayer('Player Two Wins!');
-  //     addPlayerWin();
-  //   } else if (playerOneRoll === playerTwoRoll) {
-  //     setWinningPlayer('DRAW!');
-  //   }
-  // }
-
-  
-  // including a return statement in each if block or at the end of the function block for addPlayerWin is NOT preventing the loop.
-
-  const addPlayerWin = useCallback(() => {
-    if (winningPlayer === 'Player One Wins!') {
-      setPlayerOneWins(playerOneWins + 1);
-    } 
-    if (winningPlayer === 'Player Two Wins!') {
-      setPlayerTwoWins(playerTwoWins + 1);
+    if (playerTwoRoll !== null) {
+      determineWinner();
     }
-  }, [setPlayerOneWins, setPlayerTwoWins, winningPlayer, playerOneWins, playerTwoWins])
+  }, [playerTwoRoll])
 
-  // OLD FUNCTION BELOW
-  // const addPlayerWin = () => {
-  //   if (winningPlayer === 'Player One Wins!') {
-  //     setPlayerOneWins(playerOneWins + 1);
-  //   } 
-  //   if (winningPlayer === 'Player Two Wins!') {
-  //     setPlayerTwoWins(playerTwoWins + 1);
-  //   }
-  // }
 
-  const determineWinner = useCallback(() => {
-    console.log('player 1 roll --', playerOneRoll);
+  const determineWinner = () => {
     console.log('player 2 roll --', playerTwoRoll);
 
     if (playerOneRoll > playerTwoRoll) {
@@ -93,7 +43,16 @@ const App = () => {
     } else if (playerOneRoll === playerTwoRoll) {
       setWinningPlayer('DRAW!');
     }
-  }, [playerTwoRoll]) 
+  }
+
+  const addPlayerWin = () => {
+    if (winningPlayer === 'Player One Wins!') {
+      setPlayerOneWins(playerOneWins + 1);
+    } 
+    if (winningPlayer === 'Player Two Wins!') {
+      setPlayerTwoWins(playerTwoWins + 1);
+    }
+  }
 
   const resetNextTurn = () => {
       setPlayerOneRoll(null);
