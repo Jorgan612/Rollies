@@ -42,6 +42,7 @@ const App = () => {
     } else if (playerOneRoll === playerTwoRoll) {
       setWinningPlayer('DRAW!');
     }
+    setTimeout(resetNextTurn, 2000);
   }
 
   const addPlayerWin = (winningPlayer) => {
@@ -73,7 +74,7 @@ return (
         {playerOneRoll && <p className='current-roll'>Player One: {playerOneRoll}</p>}
         {playerTwoRoll && <p className='current-roll'>Player Two: {playerTwoRoll}</p>}
         {winningPlayer && <h3>{winningPlayer}</h3>}
-        {winningPlayer && <div className='reset-button' onClick={resetNextTurn}>Roll Again?</div>}
+        {/* {winningPlayer && <div className='reset-button' onClick={resetNextTurn}>Roll Again?</div>} */}
       </section>
       <section className='player-two-section'>
         <h1 className='player-two-title title'>Player Two</h1>
