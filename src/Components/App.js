@@ -5,7 +5,8 @@ import dice from '../assets/d20-blue.png';
 const App = () => {
  const [playerOneRoll, setPlayerOneRoll] = useState(null);
  const [playerTwoRoll, setPlayerTwoRoll] = useState(null);
-
+ 
+ const [isDisabled, setIsDisabled] = useState(false);
  const [isPlayerOneTurn, setIsPlayerOneTurn] = useState(true);
 
  const [winningPlayer, setWinningPlayer] = useState('');
@@ -21,6 +22,7 @@ const App = () => {
     } else {
       setPlayerTwoRoll(newRoll);
       setIsPlayerOneTurn(true);
+      setIsDisabled(true);
     }
   }
 
@@ -32,7 +34,6 @@ const App = () => {
 
 
   const determineWinner = () => {
-
     if (playerOneRoll > playerTwoRoll) {
       setWinningPlayer('Player One Wins!');
       addPlayerWin(1);
@@ -58,6 +59,7 @@ const App = () => {
       setPlayerOneRoll(null);
       setPlayerTwoRoll(null);
       setWinningPlayer('');
+      setIsDisabled(false);
   }
 
 return (
@@ -69,12 +71,11 @@ return (
         {playerOneWins && <p>Total Wins: {playerOneWins}</p>}
       </section>
       <section className='center-section'>
-        <img className='blue-dice-png-button' src={dice} alt='Blue 20 sided polyhedral dice' onClick={getDiceRoll}/>
+        {!isDisabled ? <img className='blue-dice-png-button' src={dice} alt='Blue 20 sided polyhedral dice'  onClick={getDiceRoll}/> : <img className='blue-dice-png-button' src={dice} alt='Blue 20 sided polyhedral dice' />}
         {isPlayerOneTurn ? <h2 className='title'>Roll the die Player One!!</h2> : <h2 className='title'>Roll the die Player Two!!</h2>}
         {playerOneRoll && <p className='current-roll'>Player One: {playerOneRoll}</p>}
         {playerTwoRoll && <p className='current-roll'>Player Two: {playerTwoRoll}</p>}
         {winningPlayer && <h3>{winningPlayer}</h3>}
-        {/* {winningPlayer && <div className='reset-button' onClick={resetNextTurn}>Roll Again?</div>} */}
       </section>
       <section className='player-two-section'>
         <h1 className='player-two-title title'>Player Two</h1>
@@ -82,8 +83,7 @@ return (
       </section>
     </div>
   </section>
-)
-
+  )
 }
 
 export default App;
