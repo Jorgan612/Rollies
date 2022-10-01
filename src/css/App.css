@@ -1,3 +1,9 @@
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
 .app {
   display: flex;
   flex-direction: column;
@@ -49,19 +55,18 @@
   font-family: 'Chango', fantasy;
 }
 
-.reset-button {
+
+.total-wins-div {
   display: flex;
-  justify-content: center;
+  flex-direction: column;
   align-items: center;
-  background-color: #fff2cc;
-  border: 3px solid #f5e3aa;
-  width: 200px;
-  height: 50px;
-  font-size: 20px;
-  border-radius: 10px;
-  box-shadow: 0px 5px 5px #f0e0b2;
 }
 
-.reset-button:hover {
-  transform: scale(1.1);
+.total-wins {
+  text-decoration: underline;
+  font-weight: bolder;
+}
+
+.number-of-wins {
+  font-size:3em;
 }

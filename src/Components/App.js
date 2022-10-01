@@ -68,7 +68,10 @@ return (
     <div className='all-sections-div'>
       <section className='player-one-section'>
         <h1 className='player-one-title title'>Player One</h1>
-        {playerOneWins && <p>Total Wins: {playerOneWins}</p>}
+        {playerOneWins && <div className='total-wins-div'>
+          <p className='total-wins'>Wins</p>
+          <p className='number-of-wins'>{playerOneWins}</p>
+        </div>}
       </section>
       <section className='center-section'>
         {!isDisabled ? <img className='blue-dice-png-button' src={dice} alt='Blue 20 sided polyhedral dice'  onClick={getDiceRoll}/> : <img className='blue-dice-png-button' src={dice} alt='Blue 20 sided polyhedral dice' />}
@@ -79,7 +82,10 @@ return (
       </section>
       <section className='player-two-section'>
         <h1 className='player-two-title title'>Player Two</h1>
-        {playerTwoWins && <p>Total Wins: {playerTwoWins}</p>}
+       {playerTwoWins && <div className='total-wins-div'>
+          <p className='total-wins'>Wins</p>
+          <p className='number-of-wins'>{playerTwoWins}</p>
+        </div>}
       </section>
     </div>
   </section>
