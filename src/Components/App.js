@@ -75,10 +75,13 @@ return (
       </section>
       <section className='center-section'>
         {!isDisabled ? <img className='blue-dice-png-button' src={dice} alt='Blue 20 sided polyhedral dice'  onClick={getDiceRoll}/> : <img className='blue-dice-png-button' src={dice} alt='Blue 20 sided polyhedral dice' />}
-        {isPlayerOneTurn ? <h2 className='title'>Roll the die Player One!!</h2> : <h2 className='title'>Roll the die Player Two!!</h2>}
-        {playerOneRoll && <p className='current-roll'>Player One: {playerOneRoll}</p>}
+        {!isDisabled && <div className='player-turn-div'>
+        {isPlayerOneTurn && <h2 className='title'>Roll, Player One!!</h2>}
+        {!isPlayerOneTurn && <h2 className='title'>Roll, Player Two!!</h2>}
+        </div>}
+        {playerOneRoll && <p className='current-roll one'>Player One: {playerOneRoll}</p>}
         {playerTwoRoll && <p className='current-roll'>Player Two: {playerTwoRoll}</p>}
-        {winningPlayer && <h3>{winningPlayer}</h3>}
+        {winningPlayer && <h3 className='winning-player'>{winningPlayer}</h3>}
       </section>
       <section className='player-two-section'>
         <h1 className='player-two-title title'>Player Two</h1>

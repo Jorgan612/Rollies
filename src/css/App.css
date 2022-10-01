@@ -44,11 +44,30 @@
 .blue-dice-png-button {
   height: 30%;
   cursor: pointer;
+  margin-bottom: 20px;
 }
 
 .blue-dice-png-button:hover {
   transition: 2s;
   transform: rotate(3turn) scale(1.1);
+  margin-bottom: 20px;
+}
+
+.player-turn-div {
+  margin-top: 20px;
+  padding: 10px;
+}
+
+.winning-player {
+  font-size: 3em;
+  margin: 10px;
+}
+
+.one {
+  margin-top: 20px;
+}
+.current-roll {
+  margin: 10px 0px;
 }
 
 .title{
