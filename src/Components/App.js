@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import Board from '../Components/Board.js';
 import '../css/App.css';
 import dice from '../assets/d20-blue.png';
 
@@ -73,6 +74,7 @@ return (
           <p className='number-of-wins title'>{playerOneWins}</p>
         </div>}
       </section>
+      {/* <Board /> */}
       <section className='center-section'>
         {!isDisabled ? <img className='blue-dice-png-button' src={dice} alt='Blue 20 sided polyhedral dice'  onClick={getDiceRoll}/> : <img className='blue-dice-png-button' src={dice} alt='Blue 20 sided polyhedral dice' />}
         {!isDisabled && <div className='player-turn-div'>
